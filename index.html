@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#172d25"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="CDA Estimados">
+<title>CDA | Estimador Profesional</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--ink:#172d25;--accent:#b88a46;--bg:#f5f6f3;--card:#fff;--line:#dfe5df;--muted:#66756c;--bad:#a93c3c;--good:#276d47}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#182720}header{background:var(--ink);color:white;padding:24px max(18px,calc((100vw - 1040px)/2));}header .eyebrow{font-size:12px;letter-spacing:.16em;color:#d7c09a;text-transform:uppercase;font-weight:700}h1{font-size:25px;margin:4px 0}header p{margin:4px 0;color:#d6e2db;font-size:13px}main{max-width:1040px;margin:auto;padding:18px 14px 100px}.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}button,.file-button{appearance:none;border:1px solid #bfcfc4;background:white;color:var(--ink);border-radius:10px;padding:10px 12px;font-size:13px;font-weight:700;cursor:pointer}button.primary{background:var(--ink);color:white;border-color:var(--ink)}button.gold{background:var(--accent);border-color:var(--accent);color:#fff}button.danger{color:var(--bad);border-color:#e7c9c9}.file-button input{display:none}.layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(290px,.75fr);gap:16px}.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 2px 8px #142f2209}.panel h2{margin:0 0 5px;font-size:17px}.hint{font-size:12px;color:var(--muted);margin:0 0 13px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{min-width:0}.field.full{grid-column:1/-1}label{display:block;font-size:12px;font-weight:700;margin:0 0 5px;color:#46584d}input,textarea,select{width:100%;padding:10px 11px;border:1px solid #cbd6cd;border-radius:9px;background:#fff;color:#1e3025;font:inherit;font-size:14px;min-width:0}textarea{min-height:76px;resize:vertical}input:focus,textarea:focus{outline:2px solid #c7b38c;outline-offset:0}input[type=number]{font-variant-numeric:tabular-nums}.subheading{margin:16px 0 8px;font-weight:750;font-size:13px}.expense{display:grid;grid-template-columns:minmax(0,1fr) 135px;gap:9px;align-items:center;margin-bottom:8px}.expense label{margin:0;font-size:13px;font-weight:500}.summary{position:sticky;top:12px}.total{background:var(--ink);color:white;border-radius:13px;padding:17px;margin-bottom:12px}.total small{display:block;color:#d2e1d8;font-weight:700;letter-spacing:.06em}.total strong{font-size:32px;letter-spacing:-.025em}.breakdown{width:100%;border-collapse:collapse;font-size:13px}.breakdown td{padding:9px 0;border-bottom:1px solid #e6ebe7}.breakdown td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}.breakdown tr.emphasis td{font-size:15px;font-weight:800;border-top:2px solid #bdcfc2}.kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.kpi{border:1px solid var(--line);border-radius:10px;padding:10px}.kpi small{display:block;color:var(--muted);font-size:11px}.kpi strong{display:block;font-size:17px}.footnote{font-size:11px;color:var(--muted);margin-top:12px}.notice{border-left:3px solid var(--accent);background:#fcf9f2;padding:10px 12px;font-size:12px;border-radius:6px;margin:10px 0}.status{font-size:12px;color:var(--muted);margin:6px 0}.print-only{display:none}footer{text-align:center;font-size:12px;color:var(--muted);padding:12px}#saved{min-width:200px;max-width:100%}
+@media(max-width:720px){.layout{display:block}.summary{position:static}h1{font-size:22px}.panel{padding:15px}.fields{gap:10px}.total strong{font-size:30px}header{padding:20px 16px}.toolbar button,.toolbar .file-button{flex:1 1 auto}}
+@media print{body{background:white;color:black;font-size:11pt}header,.toolbar,.layout,.screen-only,footer{display:none!important}.print-only{display:block!important}.print-sheet{padding:20px 25px}.print-head{border-bottom:2px solid #172d25;padding-bottom:12px;margin-bottom:25px}.print-head h1{font-size:23pt;margin:0}.print-head p{margin:2px 0}.print-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}.print-section{margin:22px 0}.print-section h3{border-bottom:1px solid #ccc;padding-bottom:7px}.print-price{font-size:22pt;font-weight:bold}.print-sheet p{white-space:pre-wrap}.print-small{font-size:9pt;color:#555}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">Custom Deck Artisan LLC</div><h1>Estimador profesional de proyectos</h1><p>Costos reales · Overhead · Contingencia · Margen de utilidad</p></header>
+<main>
+<div class="toolbar screen-only">
+<select id="saved" aria-label="Proyectos guardados"><option value="">— Proyectos guardados —</option></select>
+<button class="primary" id="save">Guardar proyecto</button><button id="new">Nuevo</button><button id="remove" class="danger">Eliminar</button>
+<button id="export">Respaldar datos</button><label class="file-button">Importar respaldo<input id="import" type="file" accept="application/json,.json"></label>
+</div>
+<div class="status screen-only" id="status">Los proyectos se guardan en este navegador. Haz respaldos regularmente.</div>
+<div class="layout">
+<div>
+<section class="panel"><h2>1 · Información del proyecto</h2><p class="hint">Estos datos aparecerán en el estimado para el cliente.</p><div class="fields">
+<div class="field"><label for="project">Nombre del proyecto</label><input id="project" value="Deck nuevo"></div>
+<div class="field"><label for="client">Cliente</label><input id="client" placeholder="Nombre del cliente"></div>
+<div class="field full"><label for="address">Ubicación del proyecto</label><input id="address" placeholder="Ciudad, Michigan"></div>
+<div class="field"><label for="area">Área aproximada (ft²)</label><input id="area" type="number" min="0" step="1" value="400"></div>
+<div class="field"><label for="duration">Días estimados de construcción</label><input id="duration" type="number" min="0" step=".5" value="10"></div>
+<div class="field full"><label for="scope">Descripción / alcance para el cliente</label><textarea id="scope">Construcción de deck según medidas y especificaciones acordadas. Incluye materiales, instalación y limpieza final descritos en la propuesta.</textarea></div>
+<div class="field full"><label for="exclusions">Exclusiones / aclaraciones</label><textarea id="exclusions">Permisos, planos de ingeniería y cambios fuera del alcance se cotizan por separado, salvo que se indique lo contrario.</textarea></div>
+</div></section>
+<section class="panel"><h2>2 · Materiales</h2><p class="hint">Ingresa el subtotal de la cotización del proveedor ANTES de impuestos. Si ya incluye impuestos, pon 0% en el campo de impuesto.</p><div class="fields">
+<div class="field"><label for="materials">Subtotal de materiales ($)</label><input id="materials" type="number" min="0" step=".01" value="12000"></div>
+<div class="field"><label for="waste">Desperdicio / extra (%)</label><input id="waste" type="number" min="0" max="100" step=".5" value="5"></div>
+<div class="field"><label for="tax">Impuesto de compra (%)</label><input id="tax" type="number" min="0" max="100" step=".1" value="6"></div>
+<div class="field"><label>Materiales con ajustes</label><input id="materialsTotal" readonly aria-label="Materiales calculados"></div>
+</div><div class="notice">Michigan: el 6% aquí representa un costo de compra de materiales cuando corresponda. No es un impuesto agregado automáticamente al contrato del cliente.</div></section>
+<section class="panel"><h2>3 · Mano de obra</h2><p class="hint">Usa el costo real por hora de cada trabajador (salario + cargas aplicables). Las horas son por persona, no del equipo completo.</p><div class="fields">
+<div class="field"><label for="crew">Trabajadores</label><input id="crew" type="number" min="0" step="1" value="3"></div>
+<div class="field"><label for="hours">Horas por trabajador en total</label><input id="hours" type="number" min="0" step="1" value="80"></div>
+<div class="field"><label for="rate">Costo promedio por hora ($)</label><input id="rate" type="number" min="0" step=".5" value="30"></div>
+<div class="field"><label for="laborExtra">Mano de obra adicional ($)</label><input id="laborExtra" type="number" min="0" step="1" value="0"></div>
+</div><p class="hint" style="margin-top:10px">Ejemplo: 3 trabajadores × 80 horas × $30 = $7,200. Incluye tu propio trabajo si participas en la construcción.</p></section>
+<section class="panel"><h2>4 · Otros costos directos</h2><p class="hint">No dejes fuera gastos que no aparecen en la factura de materiales.</p>
+<div id="expenses">
+<div class="expense"><label for="demolition">Demolición / retiro</label><input id="demolition" type="number" min="0" value="0"></div>
+<div class="expense"><label for="dumpster">Dumpster / disposición</label><input id="dumpster" type="number" min="0" value="500"></div>
+<div class="expense"><label for="equipment">Renta de equipo / herramientas</label><input id="equipment" type="number" min="0" value="300"></div>
+<div class="expense"><label for="delivery">Entrega / fletes</label><input id="delivery" type="number" min="0" value="250"></div>
+<div class="expense"><label for="fuel">Gasolina / traslados</label><input id="fuel" type="number" min="0" value="200"></div>
+<div class="expense"><label for="permits">Permisos / planos (si incluidos)</label><input id="permits" type="number" min="0" value="0"></div>
+<div class="expense"><label for="subcontract">Subcontratistas</label><input id="subcontract" type="number" min="0" value="0"></div>
+<div class="expense"><label for="misc">Consumibles / imprevistos conocidos</label><input id="misc" type="number" min="0" value="250"></div>
+</div></section>
+<section class="panel"><h2>5 · Gastos de empresa y utilidad</h2><p class="hint">Overhead = gastos indirectos del negocio (seguros, administración, teléfono, vehículo, etc.). Margen ≠ recargo.</p><div class="fields">
+<div class="field"><label for="overhead">Overhead sobre costos directos (%)</label><input id="overhead" type="number" min="0" max="100" step=".5" value="10"></div>
+<div class="field"><label for="contingency">Contingencia sobre costo + overhead (%)</label><input id="contingency" type="number" min="0" max="100" step=".5" value="5"></div>
+<div class="field"><label for="margin">Margen de utilidad deseado (%)</label><input id="margin" type="number" min="0" max="90" step=".5" value="20"></div>
+<div class="field"><label for="deposit">Anticipo (%)</label><input id="deposit" type="number" min="0" max="100" step="5" value="50"></div>
+<div class="field"><label for="warranty">Garantía de mano de obra (meses)</label><input id="warranty" type="number" min="0" step="1" value="6"></div>
+<div class="field"><label for="validity">Validez de la cotización (días)</label><input id="validity" type="number" min="1" step="1" value="15"></div>
+</div></section>
+</div>
+<aside><section class="panel summary"><h2>Resumen interno</h2><p class="hint">Solo para ti. El estimado impreso no muestra tus costos ni tu utilidad.</p>
+<div class="total"><small>PRECIO RECOMENDADO</small><strong id="salePrice">$0</strong><div style="font-size:12px;color:#d7e2dc" id="perSqft">— / ft²</div></div>
+<table class="breakdown"><tbody>
+<tr><td>Materiales (con ajustes)</td><td id="outMaterials">$0</td></tr>
+<tr><td>Mano de obra</td><td id="outLabor">$0</td></tr>
+<tr><td>Otros costos directos</td><td id="outExpenses">$0</td></tr>
+<tr><td>Overhead</td><td id="outOverhead">$0</td></tr>
+<tr><td>Reserva de contingencia</td><td id="outContingency">$0</td></tr>
+<tr class="emphasis"><td>Costo total presupuestado</td><td id="outCost">$0</td></tr>
+<tr><td>Utilidad proyectada*</td><td id="outProfit">$0</td></tr>
+</tbody></table>
+<div class="kpis"><div class="kpi"><small>Anticipo</small><strong id="outDeposit">$0</strong></div><div class="kpi"><small>Saldo</small><strong id="outBalance">$0</strong></div></div>
+<p class="footnote">*Utilidad antes de impuestos sobre la renta. La contingencia se reserva como costo presupuestado; si no se utiliza, el resultado real puede mejorar. Los valores iniciales son EJEMPLOS, no costos verificados de tu negocio.</p>
+<div style="display:grid;gap:8px;margin-top:14px"><button class="gold" id="print">Imprimir / Guardar PDF del cliente</button><button id="csv">Exportar desglose CSV</button></div>
+<div class="notice" id="warning">Revisa tus costos y medidas antes de entregar el precio.</div>
+</section></aside>
+</div>
+<div class="print-only print-sheet" id="printSheet">
+<div class="print-head"><h1>CUSTOM DECK ARTISAN LLC</h1><p>Decks · Railings · Stairs · Renovations</p><p>Michigan | (313) 651-6842 | www.customdecksartisan.com</p></div>
+<div class="print-grid"><div><strong>PROPUESTA PARA</strong><p id="pClient"></p><p id="pAddress"></p></div><div><strong>PROYECTO</strong><p id="pProject"></p><p id="pDate"></p><p id="pArea"></p></div></div>
+<div class="print-section"><h3>Alcance de trabajo</h3><p id="pScope"></p></div>
+<div class="print-section"><h3>Inversión del proyecto</h3><div class="print-price" id="pPrice"></div><p id="pPayments"></p></div>
+<div class="print-section"><h3>Exclusiones y aclaraciones</h3><p id="pExclusions"></p></div>
+<div class="print-section"><h3>Condiciones</h3><p id="pTerms"></p></div>
+<p style="margin-top:45px">Aceptación del cliente: ________________________ &nbsp;&nbsp; Fecha: ____________</p>
+<p class="print-small">Estimado preliminar sujeto a verificación de medidas, condiciones existentes, materiales y alcance final. No constituye contrato firmado.</p>
+</div>
+<footer>Custom Deck Artisan LLC · Calculadora local v1.0 · Haz un respaldo JSON de tus proyectos</footer>
+</main>
+<script>
+(function(){'use strict';
+const keys=['project','client','address','area','duration','scope','exclusions','materials','waste','tax','crew','hours','rate','laborExtra','demolition','dumpster','equipment','delivery','fuel','permits','subcontract','misc','overhead','contingency','margin','deposit','warranty','validity'];
+const numKeys=new Set(keys.filter(k=>!['project','client','address','scope','exclusions'].includes(k)));
+const expenseKeys=['demolition','dumpster','equipment','delivery','fuel','permits','subcontract','misc'];
+const el=id=>document.getElementById(id);const num=id=>Math.max(0,Number(el(id).value)||0);
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(v);
+let currentId='';let lastCalc={};const storageKey='cda-estimador-v1';
+function calculate(){
+ const materials=num('materials')*(1+num('waste')/100)*(1+num('tax')/100);
+ const labor=num('crew')*num('hours')*num('rate')+num('laborExtra');
+ const extras=expenseKeys.reduce((a,k)=>a+num(k),0);const direct=materials+labor+extras;
+ const overhead=direct*num('overhead')/100;const contingency=(direct+overhead)*num('contingency')/100;
+ const cost=direct+overhead+contingency;const margin=Math.min(90,num('margin'))/100;
+ const price=cost/(1-margin);const profit=price-cost;const deposit=price*Math.min(100,num('deposit'))/100;
+ lastCalc={materials,labor,extras,direct,overhead,contingency,cost,price,profit,deposit,balance:price-deposit,margin};
+ el('materialsTotal').value=money(materials);
+ for(const [id,value] of Object.entries({outMaterials:materials,outLabor:labor,outExpenses:extras,outOverhead:overhead,outContingency:contingency,outCost:cost,outProfit:profit,outDeposit:deposit,outBalance:price-deposit,salePrice:price}))el(id).textContent=money(value);
+ el('perSqft').textContent=num('area')>0?money(price/num('area'))+' / ft²':'Agrega ft² para precio unitario';
+ const warn=[];if(!num('materials'))warn.push('Faltan materiales');if(!num('crew')||!num('hours'))warn.push('Revisa horas de mano de obra');if(!num('overhead'))warn.push('Overhead en cero');if(!num('contingency'))warn.push('Sin reserva de contingencia');
+ el('warning').textContent=warn.length?warn.join(' · '):'Revisa cantidades, impuestos, alcance y condiciones reales antes de enviar.';
+ updatePrint();return lastCalc;
+}
+function updatePrint(){const t=id=>el(id).value.trim();const c=lastCalc;
+ const fields={pClient:t('client')||'Por confirmar',pAddress:t('address')||'Por confirmar',pProject:t('project')||'Deck',pDate:'Fecha: '+new Date().toLocaleDateString('en-US'),pArea:num('area')?'Área aproximada: '+num('area')+' ft²':'',pScope:t('scope')||'Alcance por confirmar',pPrice:money(c.price||0),pPayments:'Anticipo ('+num('deposit')+'%): '+money(c.deposit||0)+'\nSaldo estimado: '+money(c.balance||0),pExclusions:t('exclusions')||'Sin exclusiones especificadas',pTerms:'Cotización válida por '+num('validity')+' días. Garantía de mano de obra propuesta: '+num('warranty')+' meses, sujeta a términos escritos. Inicio y calendario sujetos a confirmación de materiales, permisos aplicables y acuerdo firmado.'};
+ for(const [id,value] of Object.entries(fields))el(id).textContent=value;
+}
+function snapshot(){const o={};for(const k of keys)o[k]=numKeys.has(k)?num(k):el(k).value;return o}
+function apply(o){for(const k of keys)if(o&&Object.prototype.hasOwnProperty.call(o,k))el(k).value=String(o[k]);calculate()}
+function loadStore(){try{const o=JSON.parse(localStorage.getItem(storageKey)||'{}');return o&&typeof o==='object'&&!Array.isArray(o)?o:{}}catch{return {}}}
+function writeStore(o){try{localStorage.setItem(storageKey,JSON.stringify(o));return true}catch{el('status').textContent='No se pudo guardar en este navegador. Exporta un respaldo JSON.';return false}}
+function refreshSelect(){const o=loadStore();const s=el('saved');s.replaceChildren(new Option('— Proyectos guardados —',''));for(const [id,p] of Object.entries(o).sort((a,b)=>(b[1].updated||'').localeCompare(a[1].updated||''))){s.add(new Option((p.data?.project||'Proyecto')+' · '+(p.data?.client||'Sin cliente'),id))}s.value=currentId&&o[currentId]?currentId:''}
+function message(s){el('status').textContent=s}
+function save(){const o=loadStore();if(!currentId)currentId='project-'+Date.now()+'-'+Math.floor(Math.random()*1000);o[currentId]={data:snapshot(),updated:new Date().toISOString()};if(writeStore(o)){refreshSelect();message('Proyecto guardado en este dispositivo. Haz respaldo para protegerlo.')}}
+function download(name,body,mime){const a=document.createElement('a');const u=URL.createObjectURL(new Blob([body],{type:mime}));a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),5000)}
+function exportJson(){const o=loadStore();const bundle={app:'CDA Estimador',version:1,exported:new Date().toISOString(),projects:o,current:snapshot()};download('CDA-respaldo-proyectos.json',JSON.stringify(bundle,null,2),'application/json');message('Respaldo exportado. Consérvalo en Archivos o iCloud.')}
+function csv(){const c=calculate();const rows=[['Proyecto',el('project').value],['Cliente',el('client').value],['Concepto','USD'],['Materiales',c.materials],['Mano de obra',c.labor],['Otros costos directos',c.extras],['Overhead',c.overhead],['Contingencia',c.contingency],['Costo total',c.cost],['Margen deseado',num('margin')+'%'],['Precio al cliente',c.price],['Utilidad proyectada',c.profit],['Anticipo',c.deposit],['Saldo',c.balance]];download('CDA-desglose.csv','\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\r\n'),'text/csv;charset=utf-8')}
+keys.forEach(k=>el(k).addEventListener('input',calculate));el('save').addEventListener('click',save);el('new').addEventListener('click',()=>{currentId='';el('saved').value='';for(const k of ['project','client','address','scope','exclusions'])el(k).value='';calculate();message('Nuevo proyecto. Los valores de costos se conservaron como base editable.')});
+el('saved').addEventListener('change',e=>{const o=loadStore();currentId=e.target.value;if(currentId&&o[currentId]){apply(o[currentId].data);message('Proyecto cargado. Recuerda guardar cualquier cambio.')}});
+el('remove').addEventListener('click',()=>{if(!currentId)return message('Selecciona primero un proyecto guardado.');if(!confirm('¿Eliminar este proyecto guardado?'))return;const o=loadStore();delete o[currentId];writeStore(o);currentId='';refreshSelect();message('Proyecto eliminado del almacenamiento local.')});
+el('export').addEventListener('click',exportJson);el('csv').addEventListener('click',csv);el('print').addEventListener('click',()=>{calculate();window.print()});
+el('import').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const obj=JSON.parse(await file.text());if(obj.app!=='CDA Estimador'||!obj.projects||typeof obj.projects!=='object')throw Error('Formato no válido');if(!confirm('¿Importar proyectos del respaldo? Se combinarán con los guardados.'))return;const o={...loadStore(),...obj.projects};writeStore(o);refreshSelect();message('Respaldo importado. Selecciona el proyecto en el menú.')}catch{message('No se pudo importar: verifica que sea un respaldo JSON de esta aplicación.')}finally{e.target.value=''}});
+calculate();refreshSelect();if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
+})();
+</script>
+</body></html>
